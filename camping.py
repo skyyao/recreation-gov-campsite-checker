@@ -4,6 +4,7 @@ import argparse
 import json
 import logging
 import sys
+import webbrowser
 from datetime import datetime, timedelta
 from dateutil import rrule
 from itertools import count, groupby
@@ -135,8 +136,12 @@ def get_num_available_sites(park_information, start_date, end_date, nights=None)
             desired_available.append(date)
         if desired_available and consecutive_nights(desired_available, nights):
             num_available += 1
-            LOG.debug("Available site {}: {}".format(num_available, site))
+            url = "https://www.recreation.gov/camping/campsites/"+site
+            print("Available site {}: {}".format(num_available, url))
+            if num_available == 1:
+                webbrowser.open_new_tab(url)
 
+    print("\n")
     return num_available, maximum
 
 
